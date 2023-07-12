@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Poppins">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Carattere&display=swap" rel="stylesheet">
+   
+   
+
+    <style>
+       
+         
+          
+          
+          
+          body{
+            background-attachment: fixed;
+
+            background-image: url('{% static "app/images/wepik-export-20230709112245uiNf.png" %}');
+            background-repeat:no-repeat;
+            background-size:cover;
+            font-family: 'Poppins', serif;
+            font-size: 20px;;
+            }
+            .humidity{
+                margin-top: 0;
+            }
+            .card{
+              background:white;
+
+              font-size: 15px;
+      
+              margin-left: 0px;
+            }
+            .date{
+              font-size: 12px;
+           
+            }
+
+           .container{
+            border-radius:15px;
+           }
+           
+           
+    </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
+    <div class="container-fluid ">
+      <a class="navbar-brand fs-3" href="#"><Strong>Weather App</Strong> </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-link active fs-5" aria-current="page" href="{% url 'home' %}">Home</a>
+          <a class="nav-link active fs-5" href="{% url 'features' %}">Features</a>
+       
+   
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  {% block content %}
+
+  <div class="container mt-4 text-center">
+
+    <div class="row justify-content-center">
+      <div class="col-sm-8 mb-4" >
+       
+        <form action="" method="post" novalidate>
+            {% csrf_token %}
+        
+            <h2 class="mb-2">{{form.city}}</h2>
+            <input type="submit" value="Submit" class="w-100 border-0 rounded p-1 bg-primary text-white fs-5">
+        </form>
+       </div>
+     
+     
+ 
+
+     {% if dataentry %} 
+      <div class="col-sm-12 mt-5 justify-content-center">
+        <div class="row justify-content-evenly">
+          {% for d in days_details %}
+          <div class=" col-sm-3 card shadow-lg " style="width: 14rem;">
+           
+            
+            <div class="card-body">
+              <div class="d-inline">
+                <h5 class="card-title  fw-bold fs-6 text-start ">{{city}}  <small class="date mx-2 text-primary">{{d.date_time}}</small></h5>
+ 
+
+      
+                <img src="http://openweathermap.org/img/wn/{{d.icon}}@2x.png" class="card-img-top " width="80px" height="100px" alt="...">
+              </div>
+            <p class="card-text fw-bold"> {{d.days|capfirst}}</p>
+           
+            <p class="card-text d-inline fw-bold">Temp:  {{d.temperature_celcius}}&#8451</p><br>
+            <p class="card-text d-inline fw-bold">Humidity:  {{d.humidity}}	&#37</p>
+            <p class="card-text fw-bold text-primary"style="font-family: 'Carattere', cursive;font-size:30px;"> {{d.description|capfirst}}</p>
+            <p class="card-text fw-bold">Wind: {{d.Wind|capfirst}} 	&#13214/hr</p>
+           
+            </div>
+            
+         </div>
+         {% endfor %}
+        
+       </div>
+     </div>
+     {%endif%}
+
+
+  </div>
+  </div>
+    {% endblock content %} 
+
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+</body>
+</html>
